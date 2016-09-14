@@ -152,7 +152,10 @@ function checkwin(array){
         (wincondition[2]==2 && wincondition[4]==2 && wincondition[6]==2)){
           alert("player 2 won!");
           clear();
-     };
+     }else if (!wincondition.includes(0)){
+       alert("Tie!")
+       clear();
+     }
 };
 
 function clear(){

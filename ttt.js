@@ -24,61 +24,93 @@ function onClick(e){
   bxy = drawconditioncheck(e.pageX, e.pageY, player);
   bx = bxy[0]
   by = bxy[1]
-  if(player == 1){
-    drawX(bx,by);
-    checkwin(wincondition);
-    player++
-  }else if (player == 2){
-    drawO(bx,by);
-    checkwin(wincondition);
-    player--
+  if(bx != 500 && by != 500){
+    if(player == 1){
+      drawX(bx,by);
+      setTimeout(checkwin, 1000, wincondition);
+      player++;
+    }else if (player == 2){
+      drawO(bx,by);
+      setTimeout(checkwin,1000,wincondition);
+      player--;
+    };
   };
 };
 
 function drawconditioncheck(x,y){
   if(x > 0 && x < 100){
     if(y > 0 && y < 100){
-      setcondition(0);
-      return [0,0];
+      if(setcondition(0)){
+        return [0,0];
+      }
+      return [500,500];
     }else if (y > 100 && y < 200) {
-      setcondition(3);
-      return [0,100];
+      if(setcondition(3)){
+        return [0,100];
+      }
+      return [500,500];
     }else if (y > 200 && y < 300) {
-      setcondition(6);
-      return [0, 200];
+      if(setcondition(6)){
+        return [0,200];
+      }
     }
+    return [500,500];
   }else if (x > 100 && x < 200) {
     if(y > 0 && y < 100){
-      setcondition(1);
-      return [100,0];
+      if(setcondition(1)){
+        return [100,0];
+      }
+      return [500,500];
     }else if (y > 100 && y < 200) {
-      setcondition(4);
-      return [100,100];
+      if(setcondition(4)){
+        return [100,100];
+      }
+      return [500,500];
     }else if (y > 200 && y < 300) {
-      setcondition(7);
-      return [100, 200];
+      if(setcondition(7)){
+        return [100,200];
+      }
+      return [500,500];
     }
   }else if (x > 200 && x < 300) {
     if(y > 0 && y < 100){
-      setcondition(2);
-      return [200,0];
+      if(setcondition(2)){
+        return [200,0];
+      }
+      return [500,500];
     }else if (y > 100 && y < 200) {
-      setcondition(5);
-      return [200,100];
+      if(setcondition(5)){
+        return [200,100];
+      }
+      return [500,500];
     }else if (y > 200 && y < 300) {
-      setcondition(8);
-      return [200, 200];
+      if(setcondition(8)){
+        return [200,200];
+      }
+      return [500,500];
     }
   }
 }
 
 function setcondition(number){
-  if(player == 1){
+  if(player == 1 && wincondition[number] == 0){
     wincondition[number] = 1;
-  }else {
+    return true;
+  }else if (player == 2 && wincondition[number] == 0) {
     wincondition[number] = 2;
-  }
-}
+    return true;
+  }else {
+    return false;
+  };
+};
+
+function checkdisable(number){
+  if(number > 0){
+    return false;
+  }else{
+    return true;
+  };
+};
 
 function drawX(coordx, coordy){
   var c = document.getElementById("playboard");

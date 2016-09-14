@@ -110,7 +110,7 @@ function checkwin(array){
      (wincondition[2]==1 && wincondition[4]==1 && wincondition[6]==1)){
        alert("player 1 won!");
        clear();
-     }else if ((wincondition[0] && !wincondition[3] && !wincondition[6]) ||
+     }else if ((wincondition[0]==2 && wincondition[3]==2 && wincondition[6]==2) ||
         (wincondition[1]==2 && wincondition[4]==2 && wincondition[7]==2) ||
         (wincondition[2]==2 && wincondition[5]==2 && wincondition[8]==2) ||
         (wincondition[0]==2 && wincondition[4]==2 && wincondition[8]==2) ||

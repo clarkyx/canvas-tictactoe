@@ -5,6 +5,7 @@ function init(){
   var ctx = c.getContext("2d")
   ctx.fillStyle="#ffffff";
   ctx.fillRect(0,0,300,300);
+  ctx.beginPath();
   ctx.moveTo(100,0);
   ctx.lineTo(100,300);
   ctx.stroke();
@@ -17,6 +18,7 @@ function init(){
   ctx.moveTo(0,200);
   ctx.lineTo(300,200);
   ctx.stroke();
+  ctx.closePath();
   c.addEventListener("click", onClick, false);
 };
 
@@ -27,11 +29,11 @@ function onClick(e){
   if(bx != 500 && by != 500){
     if(player == 1){
       drawX(bx,by);
-      setTimeout(checkwin, 1000, wincondition);
+      setTimeout(checkwin,100,wincondition);
       player++;
     }else if (player == 2){
       drawO(bx,by);
-      setTimeout(checkwin,1000,wincondition);
+      setTimeout(checkwin,100,wincondition);
       player--;
     };
   };
@@ -115,20 +117,23 @@ function checkdisable(number){
 function drawX(coordx, coordy){
   var c = document.getElementById("playboard");
   var ctx = c.getContext("2d")
+  ctx.beginPath();
   ctx.moveTo(coordx,coordy);
   ctx.lineTo(coordx + 100, coordy + 100);
   ctx.stroke();
   ctx.moveTo(coordx + 100,coordy);
   ctx.lineTo(coordx, coordy + 100);
   ctx.stroke();
+  ctx.closePath()
 };
 
 function drawO(coordx, coordy){
   var c = document.getElementById("playboard");
   var ctx = c.getContext("2d")
   ctx.beginPath();
-  ctx.arc(coordx+50, coordy+50, 45, 0, Math.PI*2);
+  ctx.arc(coordx+50, coordy+50, 45, 0, Math.PI*2, false);
   ctx.stroke();
+  ctx.closePath();
 };
 
 function checkwin(array){
@@ -142,24 +147,29 @@ function checkwin(array){
      (wincondition[2]==1 && wincondition[4]==1 && wincondition[6]==1)){
        alert("player 1 won!");
        clear();
-     }else if ((wincondition[0]==2 && wincondition[3]==2 && wincondition[6]==2) ||
-        (wincondition[1]==2 && wincondition[4]==2 && wincondition[7]==2) ||
-        (wincondition[2]==2 && wincondition[5]==2 && wincondition[8]==2) ||
-        (wincondition[0]==2 && wincondition[4]==2 && wincondition[8]==2) ||
-        (wincondition[6]==2 && wincondition[7]==2 && wincondition[8]==2) ||
-        (wincondition[3]==2 && wincondition[4]==2 && wincondition[5]==2) ||
-        (wincondition[0]==2 && wincondition[1]==2 && wincondition[2]==2) ||
-        (wincondition[2]==2 && wincondition[4]==2 && wincondition[6]==2)){
-          alert("player 2 won!");
-          clear();
-     }else if (!wincondition.includes(0)){
-       alert("Tie!")
+  }else if ((wincondition[0]==2 && wincondition[3]==2 && wincondition[6]==2) ||
+     (wincondition[1]==2 && wincondition[4]==2 && wincondition[7]==2) ||
+     (wincondition[2]==2 && wincondition[5]==2 && wincondition[8]==2) ||
+     (wincondition[0]==2 && wincondition[4]==2 && wincondition[8]==2) ||
+     (wincondition[6]==2 && wincondition[7]==2 && wincondition[8]==2) ||
+     (wincondition[3]==2 && wincondition[4]==2 && wincondition[5]==2) ||
+     (wincondition[0]==2 && wincondition[1]==2 && wincondition[2]==2) ||
+     (wincondition[2]==2 && wincondition[4]==2 && wincondition[6]==2)){
+       alert("player 2 won!");
+       clear();
+  }else if (!wincondition.includes(0)){
+       alert("Tie!");
        clear();
      }
 };
 
 function clear(){
-  window.location.reload(false);
+  var c = document.getElementById("playboard");
+  var ctx = c.getContext("2d");
+  ctx.clearRect(0, 0, ctx.width, ctx.height);
+  player = 1;
+  wincondition = [0,0,0,0,0,0,0,0,0];
+  init();
 }
 
 init();
